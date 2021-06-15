@@ -1,0 +1,44 @@
+// Tables
+
+.table {
+  tr {
+    transition: $transition-base;
+    text-align: right !important;
+  }
+
+  &.table-alternate-spaced {
+    border: 0;
+
+    tbody {
+      tr {
+        background: transparent;
+
+        &:hover {
+          td::before {
+            background: $table-hover-bg;
+          }
+        }
+
+        td {
+          &:last-child {
+            &::before {
+              @include border-left-radius($border-radius-lg);
+              border-left: $gray-400 solid 1px;
+              @include border-right-radius(unset);
+              border-right: unset;
+            }
+          }
+
+          &:first-child {
+            &::before {
+              @include border-right-radius($border-radius-lg);
+              border-right: $gray-400 solid 1px;
+              @include border-left-radius(unset);
+              border-left: unset;
+            }
+          }
+        }
+      }
+    }
+  }
+}

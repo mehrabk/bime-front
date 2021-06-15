@@ -1,0 +1,54 @@
+.app-sidebar-fixed .app-sidebar {
+  right: 0;
+  left: unset;
+  text-align: right;
+}
+
+// Responsive
+
+@include media-breakpoint-down(md) {
+  .app-sidebar {
+    right: unset !important;
+    left: -$sidebar-width !important;
+  }
+
+  .app-sidebar-mobile-open {
+    .app-sidebar {
+      right: 0 !important;
+      left: unset !important;
+      box-shadow: $sidebar-shadow;
+    }
+  }
+}
+
+.sidebar-navigation ul li > a {
+  direction: rtl;
+  width: 100%;
+}
+
+.sidebar-icon {
+  margin: 0 0 0 0.55556rem !important;
+}
+
+.sidebar-item-label > .badge {
+  right: unset !important;
+  left: 2.5rem;
+}
+
+.sidebar-icon-indicator {
+  margin-right: auto !important;
+  margin-left: unset !important;
+}
+
+.sidebar-navigation ul li ul li a::after {
+  right: 12px;
+  left: unset;
+}
+.app-sidebar-logo--text {
+  padding: 0 0.66667rem 0 0 !important;
+}
+
+.expand-sidebar-btn {
+  right: unset !important;
+  left: 0 !important;
+}

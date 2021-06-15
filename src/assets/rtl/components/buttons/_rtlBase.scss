@@ -1,0 +1,10 @@
+.btn-wrapper--label + .btn-wrapper--icon {
+  margin-left: unset;
+  margin-right: 0.5rem;
+}
+
+// myCode
+.btn-wrapper--icon + .btn-wrapper--label {
+  margin-left: unset;
+  margin-right: 0.5rem;
+}

@@ -1,0 +1,25 @@
+.app-header--pane {
+  // direction: rtl;
+}
+
+@media (min-width: 1100px) {
+  .app-sidebar-collapsed.app-header-fixed .app-header {
+    left: 0;
+    right: 100px;
+  }
+}
+
+.btn-transition-none {
+  span {
+    direction: ltr !important;
+  }
+}
+
+.app-drawer-wrapper {
+  padding: 0.28571rem 0 0.28571rem 1rem !important;
+  margin: 0 2rem 0 1rem !important;
+}
+
+.d-xl-block {
+  text-align: right;
+}

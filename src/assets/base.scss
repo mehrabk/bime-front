@@ -1,0 +1,85 @@
+// Core
+
+@import 'core';
+
+// Fonts
+
+@import url('https://fonts.googleapis.com/css?family=Heebo:400,700&display=swap');
+
+@import 'scaffolding';
+
+// Widgets
+
+@import 'widgets';
+
+// Components
+
+@import 'components';
+
+// Layout Components
+
+@import 'layout-components';
+
+// Layout Blueprints
+
+@import 'layout-blueprints';
+
+// Right To Left
+
+@import 'rtl/rtl';
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+// extra config
+
+.overflow_unset {
+  overflow: unset !important;
+}
+
+.dialog_title {
+  border-top-left-radius: 0.6rem !important;
+  border-top-right-radius: 0.6rem !important;
+}
+
+.overflow_unset {
+  overflow: unset !important;
+
+  .MuiDialogTitle-root {
+    border-top-left-radius: 0.6rem !important;
+    border-top-right-radius: 0.6rem !important;
+  }
+
+  .MuiDialogContent-root {
+    overflow: unset !important;
+  }
+}
+
+.ReactModal__Overlay--after-open {
+  z-index: 2000 !important;
+}
+
+.rbc-btn-group {
+  direction: ltr !important;
+}
+
+.dir-ltr-all {
+  * {
+    direction: ltr !important;
+  }
+}

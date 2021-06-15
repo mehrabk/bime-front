@@ -1,0 +1,11 @@
+.MuiMenuItem-root {
+  font-family: IranSans !important;
+}
+
+.MuiSelect-root {
+  text-align: right;
+}
+
+body .MuiSwitch-root .MuiSwitch-switchBase.Mui-checked {
+  transform: translateX(-28px);
+}

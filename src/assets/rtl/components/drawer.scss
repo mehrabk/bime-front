@@ -1,0 +1,14 @@
+.app-drawer-content {
+  left: 0;
+  right: unset;
+  transform: translate(-450px);
+}
+.app-drawer-content .close-drawer-btn {
+  right: -14px;
+  left: 0;
+}
+
+// .header-drawer-open .app-drawer-content {
+//   transform: translate(152px, 0);
+//   box-shadow: -0.46875rem 0 2.1875rem rgba(59, 62, 102, 0.03), -0.9375rem 0 1.40625rem rgba(59, 62, 102, 0.03), -0.25rem 0 0.53125rem rgba(59, 62, 102, 0.05), -0.125rem 0 0.1875rem rgba(59, 62, 102, 0.03);
+// }

@@ -1,0 +1,28 @@
+* {
+  direction: rtl !important;
+}
+
+body {
+  text-align: right !important;
+}
+
+// app-main rtl properties
+@import './components/app-main';
+
+// sidebar rtl properties
+@import './components/sidebar';
+
+// header rtl properties
+@import './components/app-header';
+
+// drawer rtl properties
+@import './components/drawer';
+
+@import './components/elements/searchbar';
+@import './components/tables/rtlBase';
+@import './components/cards/rtlBase';
+@import './components//listgroups/rtlBase';
+@import './components/buttons/rtlBase';
+@import './components/timelines/rtlbase';
+@import './widgets/react-cropper/rtlBase.scss';
+@import './components/elements/base';
