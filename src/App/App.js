@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -134,6 +133,7 @@ import {
   faSignOutAlt,
   faLink
 } from '@fortawesome/free-solid-svg-icons';
+import { history } from 'shared/helpers/APIUtils';
 library.add(
   far,
   faSquare,
@@ -264,13 +264,13 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 function App() {
   return (
-    <BrowserRouter basename="/">
+    <Router history={history} basename="/">
       <ScrollToTop>
         <StylesProvider jss={jss}>
           <Routes />
         </StylesProvider>
       </ScrollToTop>
-    </BrowserRouter>
+    </Router>
   );
 }
 

@@ -1,45 +1,44 @@
-import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
 import React, { useEffect, useState } from 'react';
-import ErrorConfirmationModal from 'shared/components/modal/ErrorConfirmationModal';
-import Notification from 'shared/components/notification/Notification';
+import { useGhest } from 'shared/hooks/GhestHooks';
+import { useParams } from 'react-router';
+import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
+import { Dialog, DialogTitle } from '@material-ui/core';
 import {
   DEFAULT_PAGE_NUMBER,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SORT,
   DEFAULT_SORT_ORDER
 } from 'shared/helpers/APIUtils';
-import { useCustomer } from 'shared/hooks/CustomerHooks';
-import CustomerList from './components/CustomerList';
 import Title from './components/Title';
-import { Dialog, DialogTitle } from '@material-ui/core';
-import CustomerEdit from './components/CustomerEdit';
+import GhestEdit from './components/GhestEdit';
+import Notification from 'shared/components/notification/Notification';
+import ErrorConfirmationModal from 'shared/components/modal/ErrorConfirmationModal';
+import GhestList from './components/GhestList';
 
-export default function Customer() {
+export default function Ghest() {
+  const { cId, bId } = useParams();
+  const [modal, setModal] = useState(false);
   const [size, setSize] = useState(DEFAULT_PAGE_SIZE);
   const [page, setPage] = useState(DEFAULT_PAGE_NUMBER);
   const [sort, setSort] = useState(DEFAULT_PAGE_SORT);
   const [order, setOrder] = useState(DEFAULT_SORT_ORDER);
-  const [query, setQuery] = useState('');
-
-  const [modal, setModal] = useState(false);
+  const [ghestId, setGhestId] = useState();
+  const [
+    ghestList,
+    onUpdateGhest,
+    onDeleteGhest,
+    { errorMsg, isLoading }
+  ] = useGhest(bId, size, page, sort, order);
   const [showNotification, setShowNotification] = useState({
     isOpen: false,
     message: '',
     type: ''
   });
-
   const [confirmModal, setConfirmModal] = useState({
     isOpen: false
   });
 
-  const [customerId, setCustomerId] = useState(0);
-
-  const [
-    customerPagedList,
-    onUpdateCustomer,
-    onDeleteCustomer,
-    { errorMsg, isLoading }
-  ] = useCustomer(page, size, query, order, sort);
+  console.log(ghestList);
 
   useEffect(() => {
     if (errorMsg && errorMsg !== '') {
@@ -51,24 +50,21 @@ export default function Customer() {
     }
   }, [errorMsg]);
 
-  const handleAddCustomer = (cId) => {
-    console.log('handleAdd => ', cId);
-    setCustomerId(cId);
+  const handleAddGhest = (id) => {
+    setGhestId(id);
     setModal(true);
   };
 
-  const handleEditCustomer = (cId) => {
-    console.log('handleEdit => ', cId);
-    setCustomerId(cId);
+  const handleEditGhest = (id) => {
+    setGhestId(id);
     setModal(true);
   };
 
-  const handleDeleteCustomer = (customer) => {
-    console.log('handleDelete => ', customer.id);
+  const handleDeleteGhest = (ghest) => {
     setConfirmModal({
       isOpen: true,
       onConfirm: () => {
-        onDeleteCustomer(customer);
+        onDeleteGhest(ghest);
         setConfirmModal({
           isOpen: false
         });
@@ -87,20 +83,18 @@ export default function Customer() {
             fontSize="large"
           />
         }
-        handleCreate={() => handleAddCustomer(0)}
+        handleCreate={() => handleAddGhest(0)}
       />
-
-      <CustomerList
-        onAddCustomer={handleAddCustomer}
-        onEditCustomer={handleEditCustomer}
-        onDeleteCustomer={handleDeleteCustomer}
-        customerPagedList={customerPagedList}
-        isLoading={isLoading}
+      <GhestList
+        ghestList={ghestList}
+        customerId={cId}
+        onAddGhest={handleAddGhest}
+        onEditeGhest={handleEditGhest}
+        onDeleteGhest={handleDeleteGhest}
         onPageChange={(p) => setPage(p - 1)}
         onSizeChange={(s) => setSize(s)}
         onOrderChange={(o) => setOrder(o)}
         order={order}
-        onSearch={(e) => setQuery(e.target.value)}
       />
       <Dialog
         scroll="body"
@@ -114,11 +108,11 @@ export default function Customer() {
           disableTypography
           id="form-dialog-title"
           className="text-right bg-sidebar-dark">
-          {customerId > 0 ? 'ویرایش اطلاعات مشتری' : 'ثبت مشتری جدید'}
+          {ghestId > 0 ? 'ویرایش اطلاعات قسط' : 'ثبت قسط جدید'}
         </DialogTitle>
-        <CustomerEdit
-          customerId={customerId}
-          onUpdateCustomer={onUpdateCustomer}
+        <GhestEdit
+          ghestId={ghestId}
+          onUpdateGhest={onUpdateGhest}
           handleClose={() => setModal(!modal)}
         />
       </Dialog>

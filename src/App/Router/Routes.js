@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ClimbingBoxLoader } from 'react-spinners';
@@ -15,9 +15,10 @@ import {
   MinimalLayout,
   PresentationLayout
 } from '../../layout-blueprints';
+import MyAppRouter from './components/MyAppRouter';
 
 // Example Pages
-const Home = lazy(() => import('Containers/Home'));
+// const Home = lazy(() => import('Containers/Home'));
 
 const Routes = () => {
   const location = useLocation();
@@ -82,7 +83,7 @@ const Routes = () => {
       <AnimatePresence>
         <Suspense fallback={<SuspenseLoading />}>
           <Switch>
-            <Redirect exact from="/" to="/home" />
+            <Redirect exact from="/" to="/app" />
             <Route path={['/Overview']}>
               <PresentationLayout>
                 <Switch location={location} key={location.pathname}>
@@ -98,7 +99,7 @@ const Routes = () => {
               </PresentationLayout>
             </Route>
 
-            <Route path={['/home']}>
+            <Route path={['/app']}>
               <LeftSidebar>
                 <Switch location={location} key={location.pathname}>
                   <motion.div
@@ -107,7 +108,7 @@ const Routes = () => {
                     exit="out"
                     variants={pageVariants}
                     transition={pageTransition}>
-                    <Route path="/home" component={Home} />
+                    <Route path="/app" component={MyAppRouter} />
                   </motion.div>
                 </Switch>
               </LeftSidebar>
@@ -136,7 +137,14 @@ const Routes = () => {
             <Route
               path={
                 [
-                  // '/PageLoginBasic',
+                  // '/PageError404',
+                  // '/PageError500',
+                  // '/PageError505',
+                  // '/login',
+                  // '/register',
+                  // '/verify',
+                  // '/recover',
+                  // '/newpass'
                 ]
               }>
               <MinimalLayout>
