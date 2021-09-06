@@ -21,7 +21,7 @@ import clsx from 'clsx';
 import moment from 'moment';
 import jMoment from 'moment-jalaali';
 import JalaliUtils from '@date-io/jalaali';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import BlockUi from 'react-block-ui';
 import { useDropzone } from 'react-dropzone';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -59,6 +59,12 @@ const FormImp = ({ methods, ghestItem }) => {
   });
   const [selectedDate, handleDateChange] = useState(moment());
 
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.map((file) => {
+      uploadFile(file);
+    });
+  }, []);
+
   const {
     isDragActive,
     isDragAccept,
@@ -66,14 +72,13 @@ const FormImp = ({ methods, ghestItem }) => {
     getRootProps,
     getInputProps
   } = useDropzone({
+    onDrop,
     accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      acceptedFiles.map((file) => uploadImage(file));
-    }
+    noDragEventsBubbling: true
   });
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const uploadImage = async (file) => {
+  const uploadFile = async (file) => {
     setSavingImage(true);
     let formData = new FormData();
     formData.append('file', file);
@@ -86,7 +91,6 @@ const FormImp = ({ methods, ghestItem }) => {
           setUploadPercentage(percentage);
         }
       });
-      console.log(response);
       setSavingImage(false);
       append(response.data);
     } catch (error) {
@@ -293,7 +297,7 @@ const FormImp = ({ methods, ghestItem }) => {
                             <div className="dropzone-inner-wrapper dropzone-inner-wrapper-alt">
                               {isDragAccept && (
                                 <div>
-                                  <div className="d-100 btn-icon mb-3 hover-scale-rounded bg-success shadow-success-sm rounded-lg text-white">
+                                  <div className="d-30 btn-icon mb-3 hover-scale-rounded bg-success shadow-success-sm rounded-lg text-white">
                                     <CheckIcon className="d-50" />
                                   </div>
                                   <div className="font-size-xs text-success">
@@ -303,7 +307,7 @@ const FormImp = ({ methods, ghestItem }) => {
                               )}
                               {isDragReject && (
                                 <div>
-                                  <div className="d-100 btn-icon mb-3 hover-scale-rounded bg-danger shadow-danger-sm rounded-lg text-white">
+                                  <div className="d-30 btn-icon mb-3 hover-scale-rounded bg-danger shadow-danger-sm rounded-lg text-white">
                                     <CloseTwoToneIcon className="d-30" />
                                   </div>
                                   <div className="font-size-xs text-danger">

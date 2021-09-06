@@ -78,9 +78,7 @@ export default function CustomerListTable(props) {
                           color="primary"
                           size="small"
                           onClick={() => {
-                            history.push(
-                              `/app/customer/${customer.id}/bimeList`
-                            );
+                            history.push(`/app/bime/${customer.id}/list`);
                           }}>
                           <EditTwoToneIcon variant="primary" />
                         </IconButton>

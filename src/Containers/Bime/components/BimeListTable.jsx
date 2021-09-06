@@ -71,14 +71,12 @@ export default function BimeListTable(props) {
                         </Typography>
                       </td>
                       <td>
-                        <IconButton
+                        <IconButton 
                           variant="contained"
                           color="primary"
                           size="small"
                           onClick={() => {
-                            history.push(
-                              `/app/customer/${customerId}/bime/${bime.id}/ghestList`
-                            );
+                            history.push(`/app/ghest/${bime.id}/list`);
                           }}>
                           <EditTwoToneIcon variant="primary" />
                         </IconButton>

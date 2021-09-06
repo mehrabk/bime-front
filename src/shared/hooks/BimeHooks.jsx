@@ -10,10 +10,8 @@ export const useBime = (customerId) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await request().get(
-          `/customer/${customerId}/getBimeList`
-        );
-        setBimeList(response.data);
+        const response = await request().get(`/bime/${customerId}/list`);
+        setBimeList(response.data.content);
       } catch (error) {
         console.log(error);
         setErrorMsg('خطا در دریافت اطلاعات لیست بیمه ها');

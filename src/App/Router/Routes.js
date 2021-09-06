@@ -1,28 +1,29 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ClimbingBoxLoader } from 'react-spinners';
-
 import { ThemeProvider } from '@material-ui/styles';
-
-import MuiTheme from '../../theme';
-
+import Login from 'Containers/Auth/Login/index';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { Suspense } from 'react';
+import { useSelector } from 'react-redux';
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
+import { ClimbingBoxLoader } from 'react-spinners';
 // Layout Blueprints
-
 import {
-  LeftSidebar,
   CollapsedSidebar,
+  LeftSidebar,
   MinimalLayout,
   PresentationLayout
 } from '../../layout-blueprints';
+import MuiTheme from '../../theme';
 import MyAppRouter from './components/MyAppRouter';
 
 // Example Pages
 // const Home = lazy(() => import('Containers/Home'));
 
-const Routes = () => {
+const Routes = ({ loading }) => {
+  console.log('Routes');
   const location = useLocation();
-
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
+  console.log(loading);
   const pageVariants = {
     initial: {
       opacity: 0
@@ -42,18 +43,10 @@ const Routes = () => {
   };
 
   const SuspenseLoading = () => {
-    const [show, setShow] = useState(false);
-    useEffect(() => {
-      let timeout = setTimeout(() => setShow(true), 300);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }, []);
-
     return (
       <>
         <AnimatePresence>
-          {show && (
+          {loading && (
             <motion.div
               key="loading"
               initial={{ opacity: 0 }}
@@ -82,85 +75,93 @@ const Routes = () => {
     <ThemeProvider theme={MuiTheme}>
       <AnimatePresence>
         <Suspense fallback={<SuspenseLoading />}>
-          <Switch>
-            <Redirect exact from="/" to="/app" />
-            <Route path={['/Overview']}>
-              <PresentationLayout>
-                <Switch location={location} key={location.pathname}>
-                  <motion.div
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}>
-                    {/* <Route path="/Overview" component={Overview} /> */}
-                  </motion.div>
-                </Switch>
-              </PresentationLayout>
-            </Route>
+          {!loading && (
+            <Switch>
+              <Redirect exact from="/" to="/app" />
+              <Route path={['/Overview']}>
+                <PresentationLayout>
+                  <Switch location={location} key={location.pathname}>
+                    <motion.div
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}>
+                      {/* <Route path="/Overview" component={Overview} /> */}
+                    </motion.div>
+                  </Switch>
+                </PresentationLayout>
+              </Route>
 
-            <Route path={['/app']}>
-              <LeftSidebar>
-                <Switch location={location} key={location.pathname}>
-                  <motion.div
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}>
-                    <Route path="/app" component={MyAppRouter} />
-                  </motion.div>
-                </Switch>
-              </LeftSidebar>
-            </Route>
+              <Route path={['/app']}>
+                {user && user.username && (
+                  <LeftSidebar>
+                    <Switch location={location} key={location.pathname}>
+                      <motion.div
+                        initial="initial"
+                        animate="in"
+                        exit="out"
+                        variants={pageVariants}
+                        transition={pageTransition}>
+                        <Route path="/app" component={MyAppRouter} />
+                      </motion.div>
+                    </Switch>
+                  </LeftSidebar>
+                )}
+                {!user && <Login />}
+              </Route>
 
-            <Route
-              path={
-                [
-                  // '/PageCalendar',
-                ]
-              }>
-              <CollapsedSidebar>
-                <Switch location={location} key={location.pathname}>
-                  <motion.div
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}>
-                    {/* <Route path="/PageCalendar" component={PageCalendar} /> */}
-                  </motion.div>
-                </Switch>
-              </CollapsedSidebar>
-            </Route>
+              <Route
+                path={
+                  [
+                    // '/PageCalendar',
+                  ]
+                }>
+                <CollapsedSidebar>
+                  <Switch location={location} key={location.pathname}>
+                    <motion.div
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}>
+                      {/* <Route path="/PageCalendar" component={PageCalendar} /> */}
+                    </motion.div>
+                  </Switch>
+                </CollapsedSidebar>
+              </Route>
 
-            <Route
-              path={
-                [
-                  // '/PageError404',
-                  // '/PageError500',
-                  // '/PageError505',
-                  // '/login',
-                  // '/register',
-                  // '/verify',
-                  // '/recover',
-                  // '/newpass'
-                ]
-              }>
-              <MinimalLayout>
-                <Switch location={location} key={location.pathname}>
-                  <motion.div
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}>
-                    {/* <Route path="/PageLoginBasic" component={PageLoginBasic} /> */}
-                  </motion.div>
-                </Switch>
-              </MinimalLayout>
-            </Route>
-          </Switch>
+              <Route
+                path={
+                  [
+                    // '/PageError404',
+                    // '/PageError500',
+                    // '/PageError505',
+                    // '/login'
+                    // '/register',
+                    // '/verify',
+                    // '/recover',
+                    // '/newpass'
+                  ]
+                }>
+                <MinimalLayout>
+                  <Switch location={location} key={location.pathname}>
+                    <motion.div
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}>
+                      <Route
+                        path="/login"
+                        // component={}
+                      />
+                    </motion.div>
+                  </Switch>
+                </MinimalLayout>
+              </Route>
+            </Switch>
+          )}
         </Suspense>
       </AnimatePresence>
     </ThemeProvider>

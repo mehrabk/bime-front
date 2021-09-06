@@ -11,7 +11,7 @@ export const useCustomer = (page, size, query, order, sort) => {
       setIsLoading(true);
       try {
         const response = await request().get(
-          `/customer/getCustomerList?query=${query}&page=${page}&size=${size}&orderBy=${sort}&order=${order}`
+          `/customer/list?query=${query}&page=${page}&size=${size}&orderBy=${sort}&order=${order}`
         );
         setCustomerPagedList(response.data);
         console.log(response.data);

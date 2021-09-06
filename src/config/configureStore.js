@@ -1,11 +1,6 @@
-import { createStore, combineReducers } from 'redux';
-import reducers from 'redux/reducers';
+import { combineReducers } from 'redux';
+import reducers from 'redux/reducers/index';
 
-export default function configureStore() {
-  return createStore(
-    combineReducers({
-      ...reducers
-    }),
-    {}
-  );
-}
+export default combineReducers({
+  ...reducers
+});

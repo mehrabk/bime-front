@@ -1,0 +1,10 @@
+export const DEFAULT_PAGE_NUMBER = 0;
+export const DEFAULT_PAGE_SIZE = 10;
+export const DEFAULT_PAGINATION_SIZE = 10;
+export const DEFAULT_SORT_ORDER = 'asc';
+export const IMAGE_PATH = 'http://turkmenio.ir:8082/images/';
+// export const IMAGE_PATH = `${process.env.PUBLIC_URL}/images/images/`;
+export const PUBLIC_FOLDER_PATH = `${process.env.PUBLIC_URL}/`;
+export const USER_STATUS_OK = 1;
+export const USER_STATUS_NOT_CONFIRMED = 2;
+export const USER_STATUS_PASS_CHANGING = 3;

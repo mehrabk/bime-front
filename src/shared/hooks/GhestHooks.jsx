@@ -12,7 +12,7 @@ export const useGhest = (bimeId, size, page, sort, order) => {
       setIsLoading(true);
       try {
         const response = await request().get(
-          `/bime/${bimeId}/getGhestList?page=${page}&size=${size}&sort=${sort},${order}`
+          `/ghest/${bimeId}/list?page=${page}&size=${size}&sort=${sort},${order}`
         );
         setGhestList(response.data.content);
       } catch (error) {

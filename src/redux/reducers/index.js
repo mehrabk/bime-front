@@ -1,5 +1,7 @@
 import ThemeOptions from './ThemeOptions';
+import authReducer from './authReducer';
 
 export default {
-  ThemeOptions
+  ThemeOptions,
+  auth: authReducer
 };

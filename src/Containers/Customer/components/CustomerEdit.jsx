@@ -9,7 +9,8 @@ import {
   DialogActions,
   DialogContent,
   Grid,
-  TextField
+  TextField,
+  Input
 } from '@material-ui/core';
 import BlockUi from 'react-block-ui';
 import { PhoneNumberVerifier } from 'shared/helpers/NumberFormatInput';
@@ -22,7 +23,7 @@ const VALIDATION_SCHEMA = yup.object().shape({
   lastName: yup.string().required('ضروری'),
   address: yup.string().required('ضروری'),
   phoneNumber: yup.string().required('ضرروری'),
-  identityCode: yup
+  nationalCode: yup
     .string()
     .min(10, 'کد ملی نادرست است')
     .max(10, 'کد ملی نادرست است')
@@ -30,7 +31,6 @@ const VALIDATION_SCHEMA = yup.object().shape({
 });
 
 const FormImp = ({ methods, customerItem }) => {
-  console.log(methods);
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -43,17 +43,17 @@ const FormImp = ({ methods, customerItem }) => {
           label="نام"
           name="userName"
           fullWidth
-          {...methods.register('userName')}
+          inputRef={methods.register}
           defaultValue={customerItem && customerItem.userName}
           error={
-            methods.formState &&
-            methods.formState.userName &&
-            methods.formState.userName.message
+            methods.errors &&
+            methods.errors.userName &&
+            methods.errors.userName.message
           }
           helperText={
-            methods.formState &&
-            methods.formState.userName &&
-            methods.formState.userName.message
+            methods.errors &&
+            methods.errors.userName &&
+            methods.errors.userName.message
           }
         />
       </Grid>
@@ -66,7 +66,7 @@ const FormImp = ({ methods, customerItem }) => {
           label="نام خانوادگی"
           name="lastName"
           fullWidth
-          {...methods.register('lastName')}
+          inputRef={methods.register}
           defaultValue={customerItem && customerItem.lastName}
           error={
             methods.errors &&
@@ -89,7 +89,7 @@ const FormImp = ({ methods, customerItem }) => {
           label="آدرس"
           name="address"
           fullWidth
-          {...methods.register('address')}
+          inputRef={methods.register}
           defaultValue={customerItem && customerItem.address}
           error={
             methods.errors &&
@@ -107,7 +107,7 @@ const FormImp = ({ methods, customerItem }) => {
         <TextField
           autoComplete="off"
           onChange={(e) =>
-            methods.setValue('number', PhoneNumberVerifier(e.target.value))
+            methods.setValue('phoneNumber', PhoneNumberVerifier(e.target.value))
           }
           variant="outlined"
           size="small"
@@ -116,7 +116,7 @@ const FormImp = ({ methods, customerItem }) => {
           label="شماره موبایل"
           placeholder="0911-111-1111"
           name="phoneNumber"
-          {...methods.register('phoneNumber')}
+          inputRef={methods.register}
           defaultValue={customerItem && customerItem.phoneNumber}
           error={
             methods.errors &&
@@ -134,25 +134,25 @@ const FormImp = ({ methods, customerItem }) => {
         <TextField
           autoComplete="off"
           onChange={(e) =>
-            methods.setValue('identityCode', NumberVerifier(e.target.value))
+            methods.setValue('nationalCode', NumberVerifier(e.target.value))
           }
           variant="outlined"
           size="small"
           margin="dense"
           fullWidth
           label="شماره ملی"
-          name="identityCode"
-          {...methods.register('identityCode')}
-          defaultValue={customerItem && customerItem.identityCode}
+          name="nationalCode"
+          inputRef={methods.register}
+          defaultValue={customerItem && customerItem.nationalCode}
           error={
             methods.errors &&
-            methods.errors.identityCode &&
-            methods.errors.identityCode.message
+            methods.errors.nationalCode &&
+            methods.errors.nationalCode.message
           }
           helperText={
             methods.errors &&
-            methods.errors.identityCode &&
-            methods.errors.identityCode.message
+            methods.errors.nationalCode &&
+            methods.errors.nationalCode.message
           }
         />
       </Grid>
@@ -162,7 +162,9 @@ const FormImp = ({ methods, customerItem }) => {
 
 export default function CustomerEdit(props) {
   const { customerId, onUpdateCustomer, handleClose } = props;
-  const methods = useForm({ resolver: yupResolver(VALIDATION_SCHEMA) });
+  const methods = useForm({
+    resolver: yupResolver(VALIDATION_SCHEMA)
+  });
   const [customerItem, { errorMsg, isLoading }] = useCustomerItem(customerId);
   const [saving, setSaving] = useState(false);
   const [showNotification, setShowNotification] = useState({
@@ -171,12 +173,11 @@ export default function CustomerEdit(props) {
     type: ''
   });
 
-  console.log(methods);
   const onSubmit = async (data) => {
     console.log(data);
     setSaving(true);
     try {
-      const response = await request().post('/customer/addCustomer', {
+      const response = await request().post('/customer/save', {
         ...data,
         id: customerId
       });

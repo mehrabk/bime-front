@@ -1,14 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Button,
-  Card,
-  CardContent,
-  LinearProgress,
-  makeStyles,
-  Table,
-  CardHeader,
-  Tooltip
-} from '@material-ui/core';
+import { Button, Card, Tooltip } from '@material-ui/core';
 import React, { useState } from 'react';
 import TableOptions from 'shared/components/table/TableOptions';
 import CustomerListTable from './CustomerListTable';

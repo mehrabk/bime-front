@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Router } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import { create } from 'jss';
@@ -133,7 +133,9 @@ import {
   faSignOutAlt,
   faLink
 } from '@fortawesome/free-solid-svg-icons';
-import { history } from 'shared/helpers/APIUtils';
+import { ACCESS_TOKEN, history, request } from 'shared/helpers/APIUtils';
+import { useDispatch } from 'react-redux';
+import { auth } from 'redux/actions/authActions';
 library.add(
   far,
   faSquare,
@@ -263,11 +265,29 @@ library.add(
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 function App() {
+  console.log('appp');
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (localStorage.getItem(ACCESS_TOKEN)) {
+        try {
+          const user = await request().get('/user/me');
+          dispatch(auth(user.data));
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      setLoading(false);
+    };
+    fetchUser();
+  }, []);
+
   return (
     <Router history={history} basename="/">
       <ScrollToTop>
         <StylesProvider jss={jss}>
-          <Routes />
+          <Routes loading={loading} />
         </StylesProvider>
       </ScrollToTop>
     </Router>
