@@ -29,6 +29,7 @@ const SidebarHeader = (props) => {
     sidebarToggle,
     setSidebarToggle
   } = props;
+  console.log(props);
 
   return (
     <>
@@ -45,9 +46,9 @@ const SidebarHeader = (props) => {
               />
             </div>
             <div className="app-sidebar-logo--text">
-              <span>TurkmenIO</span>
+              <span>بیمه پارسیان</span>
 
-              <b>Welcome</b>
+              <b>خوش آمدید</b>
             </div>
           </NavLink>
         </div>

@@ -6,24 +6,15 @@ import { useSelector } from 'react-redux';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { ClimbingBoxLoader } from 'react-spinners';
 // Layout Blueprints
-import {
-  CollapsedSidebar,
-  LeftSidebar,
-  MinimalLayout,
-  PresentationLayout
-} from '../../layout-blueprints';
+import { LeftSidebar } from '../../layout-blueprints';
 import MuiTheme from '../../theme';
 import MyAppRouter from './components/MyAppRouter';
-
-// Example Pages
-// const Home = lazy(() => import('Containers/Home'));
 
 const Routes = ({ loading }) => {
   console.log('Routes');
   const location = useLocation();
-  const user = useSelector((state) => state.auth.user);
-  console.log(user);
-  console.log(loading);
+  const user = useSelector((state) => state.auth);
+
   const pageVariants = {
     initial: {
       opacity: 0
@@ -75,49 +66,11 @@ const Routes = ({ loading }) => {
     <ThemeProvider theme={MuiTheme}>
       <AnimatePresence>
         <Suspense fallback={<SuspenseLoading />}>
-          {!loading && (
+          {!loading && user.isSignedIn && user.username && (
             <Switch>
-              <Redirect exact from="/" to="/app" />
-              <Route path={['/Overview']}>
-                <PresentationLayout>
-                  <Switch location={location} key={location.pathname}>
-                    <motion.div
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}>
-                      {/* <Route path="/Overview" component={Overview} /> */}
-                    </motion.div>
-                  </Switch>
-                </PresentationLayout>
-              </Route>
-
+              <Redirect exact from="/" to="/app/customer/list" />
               <Route path={['/app']}>
-                {user && user.username && (
-                  <LeftSidebar>
-                    <Switch location={location} key={location.pathname}>
-                      <motion.div
-                        initial="initial"
-                        animate="in"
-                        exit="out"
-                        variants={pageVariants}
-                        transition={pageTransition}>
-                        <Route path="/app" component={MyAppRouter} />
-                      </motion.div>
-                    </Switch>
-                  </LeftSidebar>
-                )}
-                {!user && <Login />}
-              </Route>
-
-              <Route
-                path={
-                  [
-                    // '/PageCalendar',
-                  ]
-                }>
-                <CollapsedSidebar>
+                <LeftSidebar>
                   <Switch location={location} key={location.pathname}>
                     <motion.div
                       initial="initial"
@@ -125,43 +78,14 @@ const Routes = ({ loading }) => {
                       exit="out"
                       variants={pageVariants}
                       transition={pageTransition}>
-                      {/* <Route path="/PageCalendar" component={PageCalendar} /> */}
+                      <Route path="/app" component={MyAppRouter} />
                     </motion.div>
                   </Switch>
-                </CollapsedSidebar>
-              </Route>
-
-              <Route
-                path={
-                  [
-                    // '/PageError404',
-                    // '/PageError500',
-                    // '/PageError505',
-                    // '/login'
-                    // '/register',
-                    // '/verify',
-                    // '/recover',
-                    // '/newpass'
-                  ]
-                }>
-                <MinimalLayout>
-                  <Switch location={location} key={location.pathname}>
-                    <motion.div
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}>
-                      <Route
-                        path="/login"
-                        // component={}
-                      />
-                    </motion.div>
-                  </Switch>
-                </MinimalLayout>
+                </LeftSidebar>
               </Route>
             </Switch>
           )}
+          {!user.isSignedIn && <Login />}
         </Suspense>
       </AnimatePresence>
     </ThemeProvider>

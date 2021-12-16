@@ -265,7 +265,6 @@ library.add(
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 function App() {
-  console.log('appp');
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {

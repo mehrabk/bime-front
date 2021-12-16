@@ -22,11 +22,15 @@ const VALIDATION_SCHEMA = yup.object().shape({
   userName: yup.string().required('ضروری'),
   lastName: yup.string().required('ضروری'),
   address: yup.string().required('ضروری'),
-  phoneNumber: yup.string().required('ضرروری'),
+  phoneNumber: yup
+    .string()
+    .min(11, 'شماره تماس ۱۱ رقمی است')
+    .max(11, 'شماره تماس ۱۱ رقمی است')
+    .required('ضروری'),
   nationalCode: yup
     .string()
-    .min(10, 'کد ملی نادرست است')
-    .max(10, 'کد ملی نادرست است')
+    .min(10, 'کد ملی ۱۰ رقمی است')
+    .max(10, 'کد ملی ۱۰ رقمی است')
     .required('ضروری')
 });
 
@@ -44,17 +48,9 @@ const FormImp = ({ methods, customerItem }) => {
           name="userName"
           fullWidth
           inputRef={methods.register}
-          defaultValue={customerItem && customerItem.userName}
-          error={
-            methods.errors &&
-            methods.errors.userName &&
-            methods.errors.userName.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.userName &&
-            methods.errors.userName.message
-          }
+          defaultValue={customerItem?.userName}
+          error={methods?.errors?.userName?.message}
+          helperText={methods?.errors?.userName?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -67,17 +63,9 @@ const FormImp = ({ methods, customerItem }) => {
           name="lastName"
           fullWidth
           inputRef={methods.register}
-          defaultValue={customerItem && customerItem.lastName}
-          error={
-            methods.errors &&
-            methods.errors.lastName &&
-            methods.errors.lastName.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.lastName &&
-            methods.errors.lastName.message
-          }
+          defaultValue={customerItem?.lastName}
+          error={methods?.errors?.lastName?.message}
+          helperText={methods?.errors?.lastName?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -90,17 +78,9 @@ const FormImp = ({ methods, customerItem }) => {
           name="address"
           fullWidth
           inputRef={methods.register}
-          defaultValue={customerItem && customerItem.address}
-          error={
-            methods.errors &&
-            methods.errors.address &&
-            methods.errors.address.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.address &&
-            methods.errors.address.message
-          }
+          defaultValue={customerItem?.address}
+          error={methods?.errors?.address?.message}
+          helperText={methods?.errors?.address?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -117,17 +97,9 @@ const FormImp = ({ methods, customerItem }) => {
           placeholder="0911-111-1111"
           name="phoneNumber"
           inputRef={methods.register}
-          defaultValue={customerItem && customerItem.phoneNumber}
-          error={
-            methods.errors &&
-            methods.errors.phoneNumber &&
-            methods.errors.phoneNumber.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.phoneNumber &&
-            methods.errors.phoneNumber.message
-          }
+          defaultValue={customerItem?.phoneNumber}
+          error={methods?.errors?.phoneNumber?.message}
+          helperText={methods?.errors?.phoneNumber?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -143,17 +115,9 @@ const FormImp = ({ methods, customerItem }) => {
           label="شماره ملی"
           name="nationalCode"
           inputRef={methods.register}
-          defaultValue={customerItem && customerItem.nationalCode}
-          error={
-            methods.errors &&
-            methods.errors.nationalCode &&
-            methods.errors.nationalCode.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.nationalCode &&
-            methods.errors.nationalCode.message
-          }
+          defaultValue={customerItem?.nationalCode}
+          error={methods?.errors?.nationalCode?.message}
+          helperText={methods?.errors?.nationalCode?.message}
         />
       </Grid>
     </Grid>
@@ -161,7 +125,7 @@ const FormImp = ({ methods, customerItem }) => {
 };
 
 export default function CustomerEdit(props) {
-  const { customerId, onUpdateCustomer, handleClose } = props;
+  const { customerId, onUpdateCustomer, onCloseModal } = props;
   const methods = useForm({
     resolver: yupResolver(VALIDATION_SCHEMA)
   });
@@ -173,8 +137,17 @@ export default function CustomerEdit(props) {
     type: ''
   });
 
+  useEffect(() => {
+    if (errorMsg && errorMsg !== '') {
+      setShowNotification({
+        isOpen: true,
+        message: errorMsg,
+        type: 'error'
+      });
+    }
+  }, [errorMsg]);
+
   const onSubmit = async (data) => {
-    console.log(data);
     setSaving(true);
     try {
       const response = await request().post('/customer/save', {
@@ -182,7 +155,7 @@ export default function CustomerEdit(props) {
         id: customerId
       });
       onUpdateCustomer(response.data);
-      handleClose();
+      onCloseModal();
     } catch (error) {
       console.log(error);
       setShowNotification({
@@ -194,15 +167,6 @@ export default function CustomerEdit(props) {
     setSaving(false);
   };
 
-  useEffect(() => {
-    if (errorMsg && errorMsg !== '') {
-      setShowNotification({
-        isOpen: true,
-        message: errorMsg,
-        type: 'error'
-      });
-    }
-  }, [errorMsg]);
   return (
     <>
       <BlockUi
@@ -219,15 +183,18 @@ export default function CustomerEdit(props) {
             {!isLoading && customerItem && customerId > 0 && (
               <FormImp methods={methods} customerItem={customerItem} />
             )}
-            {isLoading && (!customerItem || customerId === 0) && (
+            {isLoading && !customerItem && customerId === 0 && (
               <FormImp methods={methods} />
             )}
             <DialogActions>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                className="m-2 btn-success">
                 ذخیره
               </Button>
               <Button
-                onClick={handleClose}
+                onClick={onCloseModal}
                 variant="contained"
                 color="secondary">
                 انصراف

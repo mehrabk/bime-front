@@ -13,8 +13,7 @@ export const useBime = (customerId) => {
         const response = await request().get(`/bime/${customerId}/list`);
         setBimeList(response.data.content);
       } catch (error) {
-        console.log(error);
-        setErrorMsg('خطا در دریافت اطلاعات لیست بیمه ها');
+        setErrorMsg(error?.response?.data?.message);
       }
       setIsLoading(false);
     };
@@ -33,11 +32,9 @@ export const useBime = (customerId) => {
   const onDeleteBime = (bime) => {
     const deleteBime = async () => {
       setIsLoading(true);
-      setErrorMsg('');
       try {
-        console.log('bime id => ', bime.id);
         const response = await request().delete(`/bime/delete?id=${bime.id}`);
-        if (response.data > 0 && bimeList.some((b) => b.id === bime.id)) {
+        if (response.data.message && bimeList.some((b) => b.id === bime.id)) {
           const newBimeList = bimeList.filter((b) => b.id !== bime.id);
           setBimeList(newBimeList);
         }
@@ -60,22 +57,18 @@ export const useBimeItem = (bimeId) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
       if (bimeId > 0) {
         try {
           const response = await request().get(`/bime/info?id=${bimeId}`);
           setBimeItem(response.data);
-          console.log(response.data);
           setIsLoading(false);
         } catch (error) {
-          console.log(error);
           setErrorMsg('خطا در دریافت اطلاعات بیمه.');
           setBimeItem();
         }
       } else {
         setBimeItem();
       }
-      //   setIsLoading(false);
     };
     fetchData();
   }, [bimeId]);

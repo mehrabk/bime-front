@@ -42,13 +42,13 @@ const Header = (props) => {
               <span className="hamburger-inner" />
             </span>
           </button>
-          <HeaderSearch />
-          <HeaderMenu />
+          {/* <HeaderSearch /> */}
+          {/* <HeaderMenu /> */}
         </div>
         <div className="app-header--pane">
-          <HeaderDots />
+          {/* <HeaderDots /> */}
           <HeaderUserbox />
-          <HeaderDrawer />
+          {/* <HeaderDrawer /> */}
         </div>
       </div>
     </>

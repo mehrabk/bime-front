@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Tooltip } from '@material-ui/core';
 
 const Title = (props) => {
-  const { titleIcone, titleHeading, titleDescription, handleCreate } = props;
+  const { titleIcone, titleHeading, titleDescription, onAddCustomer } = props;
   return (
     <>
       <div className="app-page-title app-page-title--shadow">
@@ -28,7 +28,7 @@ const Title = (props) => {
               variant="contained"
               size="small"
               className="d-40 btn-success"
-              onClick={handleCreate}>
+              onClick={onAddCustomer}>
               <span className="btn-wrapper--icon">
                 <FontAwesomeIcon icon={['fas', 'plus']} className="opacity-8" />
               </span>

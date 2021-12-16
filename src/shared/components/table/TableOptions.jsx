@@ -32,7 +32,7 @@ export default function TableOptions(props) {
         <div style={{ right: '5px', position: 'absolute' }}>تعداد نتایج</div>
         <List component="div">
           <ListItem
-            style={{ marginTop: '10px' }}
+            style={{ marginTop: '20px' }}
             component="a"
             button
             href="#/"
@@ -41,10 +41,8 @@ export default function TableOptions(props) {
               onSizeChange(10);
             }}>
             <div>
-              {itemPagedList && itemPagedList.size === 10 && (
-                <RadioButtonCheckedTwoToneIcon />
-              )}
-              {(!itemPagedList || itemPagedList.size !== 10) && (
+              {itemPagedList?.size === 10 && <RadioButtonCheckedTwoToneIcon />}
+              {(!itemPagedList || itemPagedList?.size !== 10) && (
                 <RadioButtonUncheckedTwoToneIcon />
               )}
               <span className="font-size-md">
@@ -61,10 +59,8 @@ export default function TableOptions(props) {
               onSizeChange(20);
             }}>
             <div>
-              {itemPagedList && itemPagedList.size === 20 && (
-                <RadioButtonCheckedTwoToneIcon />
-              )}
-              {(!itemPagedList || itemPagedList.size !== 20) && (
+              {itemPagedList?.size === 20 && <RadioButtonCheckedTwoToneIcon />}
+              {(!itemPagedList || itemPagedList?.size !== 20) && (
                 <RadioButtonUncheckedTwoToneIcon />
               )}
               <span className="font-size-md">

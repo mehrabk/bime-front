@@ -24,16 +24,8 @@ export default function LoginForm({ methods }) {
           label="نام کاربری"
           name="username"
           inputRef={methods.register}
-          error={
-            methods.errors &&
-            methods.errors.username &&
-            methods.errors.username.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.username &&
-            methods.errors.username.message
-          }
+          error={methods?.errors?.username?.message}
+          helperText={methods?.errors?.username?.message}
         />
       </div>
       <div className="mb-3">
@@ -46,16 +38,8 @@ export default function LoginForm({ methods }) {
           type="password"
           name="password"
           inputRef={methods.register}
-          error={
-            methods.errors &&
-            methods.errors.password &&
-            methods.errors.password.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.password &&
-            methods.errors.password.message
-          }
+          error={methods?.errors?.password?.message}
+          helperText={methods?.errors?.password?.message}
         />
       </div>
     </>

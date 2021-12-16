@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useGhest } from 'shared/hooks/GhestHooks';
-import { useParams } from 'react-router';
-import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
 import { Dialog, DialogTitle } from '@material-ui/core';
+import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import DeleteConfirmModal from 'shared/components/modal/DeleteConfirmModal';
+import Notification from 'shared/components/notification/Notification';
 import {
   DEFAULT_PAGE_NUMBER,
   DEFAULT_PAGE_SIZE,
   DEFAULT_PAGE_SORT,
   DEFAULT_SORT_ORDER
 } from 'shared/helpers/APIUtils';
-import Title from './components/Title';
+import { useGhest } from 'shared/hooks/GhestHooks';
 import GhestEdit from './components/GhestEdit';
-import Notification from 'shared/components/notification/Notification';
-import ErrorConfirmationModal from 'shared/components/modal/ErrorConfirmationModal';
 import GhestList from './components/GhestList';
+import Title from './components/Title';
 
 export default function Ghest() {
   const { cId, bId } = useParams();
@@ -34,11 +34,9 @@ export default function Ghest() {
     message: '',
     type: ''
   });
-  const [confirmModal, setConfirmModal] = useState({
+  const [deleteModal, setDeleteModal] = useState({
     isOpen: false
   });
-
-  console.log(ghestList);
 
   useEffect(() => {
     if (errorMsg && errorMsg !== '') {
@@ -61,11 +59,11 @@ export default function Ghest() {
   };
 
   const handleDeleteGhest = (ghest) => {
-    setConfirmModal({
+    setDeleteModal({
       isOpen: true,
       onConfirm: () => {
         onDeleteGhest(ghest);
-        setConfirmModal({
+        setDeleteModal({
           isOpen: false
         });
       }
@@ -75,8 +73,8 @@ export default function Ghest() {
   return (
     <>
       <Title
-        titleHeading="پنل مدیریت مشتریان"
-        titleDescription="مدیریت مشتریان / ایجاد و حذف قراردادها و ..."
+        titleHeading="اقساط"
+        titleDescription="مدیریت اقساط بیمه شدگان / ایجاد و ویرایش اقساط و ..."
         titleIcone={
           <PeopleOutlineOutlinedIcon
             className="text-primary"
@@ -111,9 +109,10 @@ export default function Ghest() {
           {ghestId > 0 ? 'ویرایش اطلاعات قسط' : 'ثبت قسط جدید'}
         </DialogTitle>
         <GhestEdit
+          bimeId={bId}
           ghestId={ghestId}
           onUpdateGhest={onUpdateGhest}
-          handleClose={() => setModal(!modal)}
+          onCloseModal={() => setModal(!modal)}
         />
       </Dialog>
 
@@ -124,9 +123,9 @@ export default function Ghest() {
         }
       />
 
-      <ErrorConfirmationModal
-        confirmModal={confirmModal}
-        closeConfirmModal={() => setConfirmModal({ isOpen: false })}
+      <DeleteConfirmModal
+        deleteModal={deleteModal}
+        onCloseModal={() => setDeleteModal({ isOpen: false })}
       />
     </>
   );

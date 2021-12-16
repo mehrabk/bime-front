@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Badge, Menu, Button, Tooltip, Divider } from '@material-ui/core';
@@ -8,6 +9,8 @@ import { NavLink } from 'react-router-dom';
 
 const SidebarUserbox = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const user = useSelector((state) => state.auth);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,8 +57,11 @@ const SidebarUserbox = () => {
                   </div>
                 </div>
                 <div className="pl-2">
-                  <span className="font-weight-bold d-block">TurkmenIO</span>
-                  <div className="badge badge-success border-0">Active</div>
+                  <span className="font-weight-bold d-block">
+                    {user?.username.charAt(0).toUpperCase() +
+                      user?.username.slice(1)}
+                  </span>
+                  <div className="badge badge-success border-0">آنلاین</div>
                 </div>
               </div>
               <Divider className="w-100" />
@@ -68,8 +74,11 @@ const SidebarUserbox = () => {
                     />
                   </div>
                   <div className="pl-3 line-height-sm">
-                    <b className="font-size-lg">14,596</b>
-                    <span className="text-black-50 d-block">reports</span>
+                    <b className="font-size-sm">نوع کاربر</b>
+                    <span className="text-black-50 d-block">
+                      {user?.roles.includes('ROLE_USER') && 'کاربر عادی'}
+                      {user?.roles.includes('ROLE_ADMIN') && 'مدیر'}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -113,8 +122,8 @@ const SidebarUserbox = () => {
           </Badge>
         </div>
         <div className="my-3 userbox-details">
-          <span>ترکمن آی او</span>
-          <small className="d-block text-white-50">(TurkmenIO.ir)</small>
+          <span>پنل مدیریت</span>
+          <small className="d-block text-white-50">(بیمه پارسیان)</small>
         </div>
         <Button
           component={NavLink}

@@ -46,14 +46,13 @@ export const useCustomer = (page, size, query, order, sort) => {
           `/customer/delete?id=${customerItem.id}`
         );
         if (
-          response.data > 0 &&
+          response.data.success &&
           customerPagedList.content.some((c) => c.id === customerItem.id)
         ) {
-          const newCustomers = customerPagedList.content.filter(
+          const newCustomer = customerPagedList.content.filter(
             (c) => c.id !== customerItem.id
           );
-          console.log(customerItem);
-          setCustomerPagedList({ ...customerPagedList, content: newCustomers });
+          setCustomerPagedList({ ...customerPagedList, content: newCustomer });
         }
       } catch (error) {
         setErrorMsg('خطا در حذف مشتری');
@@ -78,7 +77,6 @@ export const useCustomerItem = (customerId) => {
 
   useEffect(() => {
     const fetchCustomer = async () => {
-      setIsLoading(true);
       if (customerId > 0) {
         try {
           const response = await request().get(
@@ -89,10 +87,7 @@ export const useCustomerItem = (customerId) => {
         } catch (error) {
           console.log(error);
           setErrorMsg('خطا در دریافت اطلاعات مشتری');
-          setCustomerItem();
         }
-      } else {
-        setCustomerItem();
       }
     };
     fetchCustomer();

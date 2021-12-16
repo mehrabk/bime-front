@@ -30,8 +30,7 @@ export default function GhestListTable(props) {
               </tr>
             </thead>
             <tbody>
-              {ghestList &&
-                ghestList.length > 0 &&
+              {ghestList?.length > 0 &&
                 ghestList.map((ghest) => (
                   <tr key={ghest.id}>
                     <td>{ghest.ghestNumber}</td>

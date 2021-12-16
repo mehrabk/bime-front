@@ -44,7 +44,7 @@ export const useGhest = (bimeId, size, page, sort, order) => {
           `/ghest/delete?id=${ghestItem.id}`
         );
         if (
-          response.data > 0 &&
+          response.data.success &&
           ghestList.some((gh) => gh.id === ghestItem.id)
         ) {
           const newGhestList = ghestList.filter((gh) => gh.id !== ghestItem.id);
@@ -65,12 +65,11 @@ export const useGhest = (bimeId, size, page, sort, order) => {
 export const useGhestItem = (ghestId) => {
   const [ghestItem, setGhestItem] = useState();
   const [errorMsg, setErrormsg] = useState();
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       if (ghestId > 0) {
-        setIsLoading(true);
         try {
           const response = await request().get(`/ghest/info?id=${ghestId}`);
           setGhestItem(response.data);

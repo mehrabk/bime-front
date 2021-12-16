@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import * as yup from 'yup';
+import JalaliUtils from '@date-io/jalaali';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import {
   Button,
   DialogActions,
@@ -9,22 +7,18 @@ import {
   Grid,
   TextField
 } from '@material-ui/core';
-import { ScaleLoader } from 'react-spinners';
-import BlockUi from 'react-block-ui';
-import { NumberVerifier } from '../../../shared/helpers/NumberFormatInput';
-import { request } from 'shared/helpers/APIUtils';
-import Notification from 'shared/components/notification/Notification';
-import { useBimeItem } from 'shared/hooks/BimeHooks';
-
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import moment from 'moment';
 import jMoment from 'moment-jalaali';
-import JalaliUtils from '@date-io/jalaali';
-import {
-  TimePicker,
-  DateTimePicker,
-  DatePicker,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers';
+import React, { useEffect, useState } from 'react';
+import BlockUi from 'react-block-ui';
+import { useForm } from 'react-hook-form';
+import { ScaleLoader } from 'react-spinners';
+import Notification from 'shared/components/notification/Notification';
+import { request } from 'shared/helpers/APIUtils';
+import { useBimeItem } from 'shared/hooks/BimeHooks';
+import * as yup from 'yup';
+import { NumberVerifier } from '../../../shared/helpers/NumberFormatInput';
 
 jMoment.loadPersian({ dialect: 'persian-modern', usePersianDigits: false });
 
@@ -57,18 +51,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="شماره بیمه"
           name="bimeNumber"
           fullWidth
-          {...methods.register('bimeNumber')}
-          defaultValue={bimeItem && bimeItem.bimeNumber}
-          error={
-            methods.errors &&
-            methods.errors.bimeNumber &&
-            methods.errors.bimeNumber.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.bimeNumber &&
-            methods.errors.bimeNumber.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.bimeNumber}
+          error={methods?.errors?.bimeNumber?.message}
+          helperText={methods?.errors?.bimeNumber?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -83,18 +69,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="کد یکتا"
           name="yektaCode"
           fullWidth
-          {...methods.register('yektaCode')}
-          defaultValue={bimeItem && bimeItem.yektaCode}
-          error={
-            methods.errors &&
-            methods.errors.yektaCode &&
-            methods.errors.yektaCode.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.yektaCode &&
-            methods.errors.yektaCode.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.yektaCode}
+          error={methods?.errors?.yektaCode?.message}
+          helperText={methods?.errors?.yektaCode?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -109,18 +87,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="تعداد قسط"
           name="ghestCount"
           fullWidth
-          {...methods.register('ghestCount')}
-          defaultValue={bimeItem && bimeItem.ghestCount}
-          error={
-            methods.errors &&
-            methods.errors.ghestCount &&
-            methods.errors.ghestCount.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.ghestCount &&
-            methods.errors.ghestCount.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.ghestCount}
+          error={methods?.errors?.ghestCount?.message}
+          helperText={methods?.errors?.ghestCount?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -131,23 +101,15 @@ const FormImp = ({ methods, bimeItem }) => {
             variant="dialog"
             fullWidth
             name="contractDate"
-            {...methods.register('contractDate')}
+            inputRef={methods.register}
             okLabel="تأیید"
             cancelLabel="لغو"
             clearLabel="پاک کردن"
             labelFunc={(date) => (date ? date.format('jYYYY/jMM/jDD') : '')}
             value={selectedDate}
             onChange={handleDateChange}
-            error={
-              methods.errors &&
-              methods.errors.contractDate &&
-              methods.errors.contractDate.message
-            }
-            helperText={
-              methods.errors &&
-              methods.errors.contractDate &&
-              methods.errors.contractDate.message
-            }
+            error={methods?.errors?.contractDate?.message}
+            helperText={methods?.errors?.contractDate?.message}
           />
         </MuiPickersUtilsProvider>
       </Grid>
@@ -163,18 +125,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="مبلغ کل"
           name="totalPrice"
           fullWidth
-          {...methods.register('totalPrice')}
-          defaultValue={bimeItem && bimeItem.totalPrice}
-          error={
-            methods.errors &&
-            methods.errors.totalPrice &&
-            methods.errors.totalPrice.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.totalPrice &&
-            methods.errors.totalPrice.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.totalPrice}
+          error={methods?.errors?.totalPrice?.message}
+          helperText={methods?.errors?.totalPrice?.message}
         />
       </Grid>
 
@@ -190,18 +144,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="پیش پرداخت"
           name="pishPardakht"
           fullWidth
-          {...methods.register('pishPardakht')}
-          defaultValue={bimeItem && bimeItem.pishPardakht}
-          error={
-            methods.errors &&
-            methods.errors.pishPardakht &&
-            methods.errors.pishPardakht.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.pishPardakht &&
-            methods.errors.pishPardakht.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.pishPardakht}
+          error={methods?.errors?.pishPardakht?.message}
+          helperText={methods?.errors?.pishPardakht?.message}
         />
       </Grid>
 
@@ -214,18 +160,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="نام خودرو"
           name="carName"
           fullWidth
-          {...methods.register('carName')}
-          defaultValue={bimeItem && bimeItem.carName}
-          error={
-            methods.errors &&
-            methods.errors.carName &&
-            methods.errors.carName.message
-          }
-          helperText={
-            methods.errors &&
-            methods.errors.carName &&
-            methods.errors.carName.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.carName}
+          error={methods?.errors?.carName?.message}
+          helperText={methods?.errors?.carName?.message}
         />
       </Grid>
       <Grid item xs={12} md={6} lg={6} xl={6}>
@@ -237,14 +175,10 @@ const FormImp = ({ methods, bimeItem }) => {
           label="توضیحات"
           name="note"
           fullWidth
-          {...methods.register('note')}
-          defaultValue={bimeItem && bimeItem.note}
-          error={
-            methods.errors && methods.errors.note && methods.errors.note.message
-          }
-          helperText={
-            methods.errors && methods.errors.note && methods.errors.note.message
-          }
+          inputRef={methods.register}
+          defaultValue={bimeItem?.note}
+          error={methods?.errors?.note?.message}
+          helperText={methods?.errors?.note?.message}
         />
       </Grid>
     </Grid>
@@ -269,7 +203,7 @@ export default function BimeBadaneForm(props) {
     console.log('data == > ', data);
     setSaving(true);
     try {
-      const response = await request().post(`/customer/${customerId}/addBime`, {
+      const response = await request().post(`/bime/${customerId}/save`, {
         ...data,
         id: bimeId,
         type: 2
@@ -314,9 +248,9 @@ export default function BimeBadaneForm(props) {
             {!isLoading && bimeItem && bimeId > 0 && (
               <FormImp methods={methods} bimeItem={bimeItem} />
             )}
-            {isLoading && <FormImp methods={methods} />}
+            {isLoading && bimeId === 0 && <FormImp methods={methods} />}
             <DialogActions>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" className="btn-success">
                 ذخیره
               </Button>
               <Button
@@ -332,7 +266,7 @@ export default function BimeBadaneForm(props) {
 
       <Notification
         showNotification={showNotification}
-        onClose={() =>
+        onCloseNotification={() =>
           setShowNotification({ isOpen: false, message: '', type: '' })
         }
       />

@@ -1,6 +1,6 @@
 import PeopleOutlineOutlinedIcon from '@material-ui/icons/PeopleOutlineOutlined';
 import React, { useEffect, useState } from 'react';
-import ErrorConfirmationModal from 'shared/components/modal/ErrorConfirmationModal';
+import ErrorConfirmationModal from 'shared/components/modal/DeleteConfirmModal';
 import Notification from 'shared/components/notification/Notification';
 import {
   DEFAULT_PAGE_NUMBER,
@@ -28,9 +28,7 @@ export default function Customer() {
     type: ''
   });
 
-  const [confirmModal, setConfirmModal] = useState({
-    isOpen: false
-  });
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false });
 
   const [customerId, setCustomerId] = useState(0);
 
@@ -52,24 +50,21 @@ export default function Customer() {
   }, [errorMsg]);
 
   const handleAddCustomer = (cId) => {
-    console.log('handleAdd => ', cId);
     setCustomerId(cId);
     setModal(true);
   };
 
   const handleEditCustomer = (cId) => {
-    console.log('handleEdit => ', cId);
     setCustomerId(cId);
     setModal(true);
   };
 
   const handleDeleteCustomer = (customer) => {
-    console.log('handleDelete => ', customer.id);
-    setConfirmModal({
+    setDeleteModal({
       isOpen: true,
       onConfirm: () => {
         onDeleteCustomer(customer);
-        setConfirmModal({
+        setDeleteModal({
           isOpen: false
         });
       }
@@ -87,11 +82,10 @@ export default function Customer() {
             fontSize="large"
           />
         }
-        handleCreate={() => handleAddCustomer(0)}
+        onAddCustomer={() => handleAddCustomer(0)}
       />
 
       <CustomerList
-        onAddCustomer={handleAddCustomer}
         onEditCustomer={handleEditCustomer}
         onDeleteCustomer={handleDeleteCustomer}
         customerPagedList={customerPagedList}
@@ -119,20 +113,20 @@ export default function Customer() {
         <CustomerEdit
           customerId={customerId}
           onUpdateCustomer={onUpdateCustomer}
-          handleClose={() => setModal(!modal)}
+          onCloseModal={() => setModal(!modal)}
         />
       </Dialog>
 
       <Notification
         showNotification={showNotification}
-        onClose={() =>
+        onCloseNotification={() =>
           setShowNotification({ ...showNotification, isOpen: false })
         }
       />
 
       <ErrorConfirmationModal
-        confirmModal={confirmModal}
-        closeConfirmModal={() => setConfirmModal({ isOpen: false })}
+        deleteModal={deleteModal}
+        onCloseModal={() => setDeleteModal({ isOpen: false })}
       />
     </>
   );

@@ -62,10 +62,10 @@ export default function Login() {
                             Login
                           </h1>
                           <p className="mb-0 text-black-50">
-                            Fill in the fields below to login to your account
+                            برای ورود فیلدهای زیر را پر کنید
                           </p>
                         </div>
-                        <div className="py-4">
+                        <div className="py-4 w-50">
                           <div>
                             <form onSubmit={methods.handleSubmit(onSubmit)}>
                               <LoginForm methods={methods} />
@@ -73,18 +73,18 @@ export default function Login() {
                                 <Button
                                   type="submit"
                                   className="btn-second font-weight-bold w-50 my-2">
-                                  Sign in
+                                  ورود
                                 </Button>
                               </div>
                             </form>
 
                             <div className="text-center text-black-50 mt-3">
-                              Don't have an account?{' '}
+                              آیا ثبت نام نکرده اید؟{' '}
                               <a
                                 className="text-first"
                                 href="#/"
                                 onClick={(e) => e.preventDefault()}>
-                                Sign up
+                                ثبت نام
                               </a>
                             </div>
                           </div>

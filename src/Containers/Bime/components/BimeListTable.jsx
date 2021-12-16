@@ -25,7 +25,6 @@ const tableHeadCells = [
 
 export default function BimeListTable(props) {
   const { bimeList, customerId, onEditBime, onDeleteBime } = props;
-  console.log(bimeList);
   return (
     <>
       <CardContent>
@@ -40,13 +39,12 @@ export default function BimeListTable(props) {
                 </tr>
               </thead>
               <tbody>
-                {bimeList &&
-                  bimeList.length > 0 &&
+                {bimeList?.length > 0 &&
                   bimeList.map((bime) => (
                     <tr key={bime.id}>
                       <td>{bime.bimeNumber}</td>
                       <td>{bime.yektaCode}</td>
-                      <td>{bime.type && bime.type.label}</td>
+                      <td>{bime.type}</td>
                       <td>{bime.pishPardakht}</td>
                       <td>{bime.note}</td>
                       <td>
@@ -71,7 +69,7 @@ export default function BimeListTable(props) {
                         </Typography>
                       </td>
                       <td>
-                        <IconButton 
+                        <IconButton
                           variant="contained"
                           color="primary"
                           size="small"

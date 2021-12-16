@@ -8,16 +8,28 @@ import {
   LOGOUT
 } from '../actions/authActions';
 
-const initialState = {};
+const INITIAL_STATE = {
+  isSignedIn: null,
+  username: null,
+  email: null,
+  roles: null
+};
 
-export default function (state = initialState, action) {
-  switch (action.type) {
+export default function (state = INITIAL_STATE, action) {
+  const { type, payload } = action;
+  switch (type) {
     case AUTHENTICATE_SUCCESS:
-      return { user: action.user };
+      return { ...INITIAL_STATE, isSignedIn: true, ...payload };
     case AUTHENTICATE_FAIL:
-      return { error: action.error };
+      return { error: payload };
     case LOGOUT:
-      return {};
+      return {
+        ...INITIAL_STATE,
+        isSignedIn: false,
+        username: null,
+        email: null,
+        roles: null
+      };
     default:
       return state;
   }

@@ -15,6 +15,7 @@ import {
 import avatar7 from '../../assets/images/avatars/avatar7.jpg';
 
 import { withStyles } from '@material-ui/core/styles';
+import { NavLink } from 'react-router-dom';
 
 const StyledBadge = withStyles({
   badge: {
@@ -105,43 +106,22 @@ const HeaderUserbox = () => {
         <div className="dropdown-menu-lg overflow-hidden p-0">
           <div className="d-flex px-3 pt-3 align-items-center justify-content-between">
             <Typography className="text-capitalize pl-1 font-weight-bold text-primary">
-              <span>Profile Options</span>
+              <span>تنظیمات پروفایل</span>
             </Typography>
-            <div className="font-size-xs pr-1">
-              <Tooltip title="Change settings" arrow>
-                <a href="#/" onClick={(e) => e.preventDefault()}>
-                  <FontAwesomeIcon icon={['fas', 'plus-circle']} />
-                </a>
-              </Tooltip>
-            </div>
           </div>
           <List
             component="div"
             className="nav-neutral-primary text-left d-flex align-items-center flex-column px-3 pb-3">
             <ListItem button className="d-block text-left">
-              My Account
+              <NavLink to="/app/profile">مشاهده پروفایل</NavLink>
             </ListItem>
             <ListItem button className="d-block text-left">
-              Profile settings
-            </ListItem>
-            <ListItem button className="d-block text-left">
-              Active tasks
+              <NavLink to="/app/profile">آمار کاربر</NavLink>
             </ListItem>
           </List>
           <Divider className="w-100" />
-          <div className="d-flex py-3 justify-content-center">
-            <div className="d-flex align-items-center">
-              <div>
-                <FontAwesomeIcon
-                  icon={['far', 'chart-bar']}
-                  className="font-size-xxl text-info"
-                />
-              </div>
-              <div className="pl-3 line-height-sm">
-                <b className="font-size-lg">$9,693</b>
-                <span className="text-black-50 d-block">revenue</span>
-              </div>
-            </div>
+          <div className="d-flex px-3 p-3 align-items-center justify-content-center">
+            <NavLink to="/app/signout">خروج</NavLink>
           </div>
           <Divider className="w-100" />
           <div className="d-block rounded-bottom py-3 text-center">

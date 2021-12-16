@@ -16,7 +16,7 @@ const Footer = (props) => {
           'app-footer--shadow': footerShadow,
           'app-footer--opacity-bg': footerBgTransparent
         })}>
-        <div className="app-footer--first">
+        {/* <div className="app-footer--first">
           <List
             component="div"
             className="nav-neutral-primary d-flex align-items-center">
@@ -42,16 +42,15 @@ const Footer = (props) => {
               <span>Overview</span>
             </ListItem>
           </List>
-        </div>
+        </div> */}
         <div className="app-footer--second">
-          <span>Bamburgh React Admin Dashboard with Material-UI PRO</span> ©
-          2020 - crafted with <span className="text-danger px-1">❤</span> by{' '}
+          by{' '}
           <a
-            href="https://uifort.com"
+            href="https://turkmenio.ir"
             target="_blank"
-            title="UiFort.com"
+            title="turkmenio.ir"
             rel="noopener noreferrer">
-            UiFort.com
+            turkmenio.ir
           </a>
         </div>
       </div>

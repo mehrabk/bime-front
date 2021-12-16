@@ -6,7 +6,6 @@ import CustomerListTable from './CustomerListTable';
 
 export default function CustomerList(props) {
   const {
-    onAddCustomer,
     onEditCustomer,
     onDeleteCustomer,
     customerPagedList,

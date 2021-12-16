@@ -9,14 +9,14 @@ export const LOGOUT = 'LOGOUT';
 export function auth(user) {
   return {
     type: AUTHENTICATE_SUCCESS,
-    user
+    payload: user
   };
 }
 
 export function authError(error) {
   return {
     type: AUTHENTICATE_FAIL,
-    error
+    payload: error
   };
 }
 
