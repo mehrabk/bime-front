@@ -20,7 +20,7 @@ export function authError(error) {
   };
 }
 
-export function setLogout() {
+export function logout() {
   return {
     type: LOGOUT
   };

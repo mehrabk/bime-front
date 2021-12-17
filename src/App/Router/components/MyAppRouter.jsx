@@ -7,6 +7,7 @@ const Bime = lazy(() => import('Containers/Bime/Index'));
 const Customer = lazy(() => import('Containers/Customer'));
 const Ghest = lazy(() => import('Containers/Ghest/Index'));
 const Login = lazy(() => import('Containers/Auth/Login'));
+const Report = lazy(() => import('Containers/Report'));
 
 const MyAppRouter = () => {
   console.log('MyAppRouter');
@@ -19,6 +20,7 @@ const MyAppRouter = () => {
         <Route exact path="/app/customer/list" component={Customer} />
         <Route excat path="/app/bime/:cId/list" component={Bime} />
         <Route exact path="/app/ghest/:bId/list" component={Ghest} />
+        <Route exact path="/app/report" component={Report} />
       </Switch>
     </>
   );

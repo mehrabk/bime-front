@@ -25,12 +25,6 @@ const SidebarMenu = (props) => {
 
   // const toggleSidebarMobile = () => setSidebarToggleMobile(false);
 
-  const [contractOpen, setContractOpen] = useState(false);
-  const toggleContract = (event) => {
-    setContractOpen(!contractOpen);
-    event.preventDefault();
-  };
-
   return (
     <>
       <PerfectScrollbar>
@@ -76,50 +70,27 @@ const SidebarMenu = (props) => {
           <div className="sidebar-header">
             <span>گزارشات</span>
           </div>
+
           <ul>
             <li>
-              <a
-                href="#/"
-                onClick={toggleContract}
-                className={clsx({ active: contractOpen })}>
-                <span className="sidebar-icon">
-                  <BusinessCenterTwoToneIcon />
-                </span>
-                <span className="sidebar-item-label">گزارش قرارداد</span>
-                <span className="sidebar-icon-indicator">
-                  <ChevronLeftTwoToneIcon />
-                </span>
-              </a>
-              <Collapse in={contractOpen}>
-                <ul>
-                  <li>
-                    <NavLink to="/app/report/sales">بیمه شخص ثالث</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/app/report/badane">بیمه بدنه</NavLink>
-                  </li>
-                </ul>
-              </Collapse>
-            </li>
-            <li>
-              <NavLink to="/app/report/chart">
+              <NavLink to="/app/report">
                 <span className="sidebar-icon">
                   <InsertChartTwoToneIcon />
                 </span>
-                <span className="sidebar-item-label">نمودار</span>
+                <span className="sidebar-item-label">خلاصه گزارش</span>
               </NavLink>
             </li>
           </ul>
           <div className="sidebar-header">
-            <span>ورود</span>
+            <span>بایگانی</span>
           </div>
           <ul>
             <li>
-              <NavLink to="/app/login">
+              <NavLink to="/app/archive">
                 <span className="sidebar-icon">
                   <SecurityTwoToneIcon />
                 </span>
-                <span className="sidebar-item-label">ورود به سایت</span>
+                <span className="sidebar-item-label">بایگانی</span>
               </NavLink>
             </li>
           </ul>

@@ -87,6 +87,11 @@ export default function CustomerListTable(props) {
                     </td>
                   </tr>
                 ))}
+                {customerPagedList?.content.length === 0 && (
+                  <tr>
+                    <td>موردی یافت نشد.</td>
+                  </tr>
+                )}
               </tbody>
             </Table>
           </TableContainer>

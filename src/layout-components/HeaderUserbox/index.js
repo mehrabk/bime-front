@@ -11,11 +11,15 @@ import {
   Tooltip,
   Divider
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 import avatar7 from '../../assets/images/avatars/avatar7.jpg';
 
 import { withStyles } from '@material-ui/core/styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import { ACCESS_TOKEN, history } from 'shared/helpers/APIUtils';
+
+import { logout } from 'redux/actions/authActions';
 
 const StyledBadge = withStyles({
   badge: {
@@ -46,8 +50,9 @@ const StyledBadge = withStyles({
   }
 })(Badge);
 
-const HeaderUserbox = () => {
+const HeaderUserbox = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  console.log(props);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -121,7 +126,12 @@ const HeaderUserbox = () => {
           </List>
           <Divider className="w-100" />
           <div className="d-flex px-3 p-3 align-items-center justify-content-center">
-            <NavLink to="/app/signout">خروج</NavLink>
+            <Button
+              onClick={props.logout}
+              variant="contained"
+              className="btn btn-danger">
+              خروج
+            </Button>
           </div>
           <Divider className="w-100" />
           <div className="d-block rounded-bottom py-3 text-center">
@@ -159,4 +169,8 @@ const HeaderUserbox = () => {
   );
 };
 
-export default HeaderUserbox;
+const mapStateToProps = (state, ownProps) => {
+  return { ...state.auth };
+};
+
+export default connect(mapStateToProps, { logout })(HeaderUserbox);

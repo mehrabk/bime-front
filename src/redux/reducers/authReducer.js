@@ -1,3 +1,4 @@
+import { ACCESS_TOKEN } from 'shared/helpers/APIUtils';
 import {
   AUTHENTICATE_SUCCESS,
   AUTHENTICATE_FAIL,
@@ -23,6 +24,9 @@ export default function (state = INITIAL_STATE, action) {
     case AUTHENTICATE_FAIL:
       return { error: payload };
     case LOGOUT:
+      if (localStorage.getItem(ACCESS_TOKEN)) {
+        localStorage.removeItem(ACCESS_TOKEN);
+      }
       return {
         ...INITIAL_STATE,
         isSignedIn: false,
