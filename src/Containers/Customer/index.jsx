@@ -94,7 +94,7 @@ export default function Customer() {
         onSizeChange={(s) => setSize(s)}
         onOrderChange={(o) => setOrder(o)}
         order={order}
-        onSearch={(e) => setQuery(e.target.value)}
+        setQuery={setQuery}
       />
       <Dialog
         scroll="body"

@@ -10,6 +10,7 @@ import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 
 import React from 'react';
 import { history } from 'shared/helpers/APIUtils';
+import SearchCustomer from './SearchCustomer';
 
 const tableHeadCells = [
   { id: 'userName', label: 'نام' },
@@ -27,11 +28,13 @@ export default function CustomerListTable(props) {
     customerPagedList,
     onEditCustomer,
     onDeleteCustomer,
-    onPageChange
+    onPageChange,
+    setQuery
   } = props;
   return (
     <>
       <CardContent>
+        <SearchCustomer setQuery={setQuery} />
         <div className="table-responsive-md">
           <TableContainer>
             <Table className="table table-borderless table-hover text-nowrap mb-0">
@@ -49,7 +52,7 @@ export default function CustomerListTable(props) {
                     <td>{customer.lastName}</td>
                     <td>{customer.address}</td>
                     <td>{customer.phoneNumber}</td>
-                    <td>{customer.identityCode}</td>
+                    <td>{customer.nationalCode}</td>
                     <td>
                       <IconButton
                         variant="contained"

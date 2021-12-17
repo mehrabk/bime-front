@@ -14,7 +14,7 @@ export default function CustomerList(props) {
     onSizeChange,
     onOrderChange,
     order,
-    onSearch
+    setQuery
   } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,6 +46,7 @@ export default function CustomerList(props) {
           onEditCustomer={onEditCustomer}
           onDeleteCustomer={onDeleteCustomer}
           onPageChange={onPageChange}
+          setQuery={setQuery}
         />
       </Card>
 
